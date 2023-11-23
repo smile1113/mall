@@ -1,7 +1,7 @@
 package com.macro.mall.common.exception;
 
 import cn.hutool.core.util.StrUtil;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -21,16 +21,16 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = ApiException.class)
-    public CommonResult handle(ApiException e) {
+    public R handle(ApiException e) {
         if (e.getErrorCode() != null) {
-            return CommonResult.failed(e.getErrorCode());
+            return R.failed(e.getErrorCode());
         }
-        return CommonResult.failed(e.getMessage());
+        return R.failed(e.getMessage());
     }
 
     @ResponseBody
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public CommonResult handleValidException(MethodArgumentNotValidException e) {
+    public R handleValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         String message = null;
         if (bindingResult.hasErrors()) {
@@ -39,12 +39,12 @@ public class GlobalExceptionHandler {
                 message = fieldError.getField()+fieldError.getDefaultMessage();
             }
         }
-        return CommonResult.validateFailed(message);
+        return R.validateFailed(message);
     }
 
     @ResponseBody
     @ExceptionHandler(value = BindException.class)
-    public CommonResult handleValidException(BindException e) {
+    public R handleValidException(BindException e) {
         BindingResult bindingResult = e.getBindingResult();
         String message = null;
         if (bindingResult.hasErrors()) {
@@ -53,16 +53,16 @@ public class GlobalExceptionHandler {
                 message = fieldError.getField()+fieldError.getDefaultMessage();
             }
         }
-        return CommonResult.validateFailed(message);
+        return R.validateFailed(message);
     }
 
     @ResponseBody
     @ExceptionHandler(value = SQLSyntaxErrorException.class)
-    public CommonResult handleSQLSyntaxErrorException(SQLSyntaxErrorException e) {
+    public R handleSQLSyntaxErrorException(SQLSyntaxErrorException e) {
         String message = e.getMessage();
         if (StrUtil.isNotEmpty(message) && message.contains("denied")) {
             message = "演示环境暂无修改权限，如需修改数据可本地搭建后台服务！";
         }
-        return CommonResult.failed(message);
+        return R.failed(message);
     }
 }

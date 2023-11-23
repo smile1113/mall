@@ -1,7 +1,7 @@
 package com.macro.mall.controller;
 
 
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.dto.OssCallbackResult;
 import com.macro.mall.dto.OssPolicyResult;
 import com.macro.mall.service.OssService;
@@ -31,17 +31,17 @@ public class OssController {
     @ApiOperation(value = "Oss上传签名生成")
     @RequestMapping(value = "/policy", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<OssPolicyResult> policy() {
+    public R<OssPolicyResult> policy() {
         OssPolicyResult result = ossService.policy();
-        return CommonResult.success(result);
+        return R.success(result);
     }
 
     @ApiOperation(value = "Oss上传成功回调")
     @RequestMapping(value = "callback", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult<OssCallbackResult> callback(HttpServletRequest request) {
+    public R<OssCallbackResult> callback(HttpServletRequest request) {
         OssCallbackResult ossCallbackResult = ossService.callback(request);
-        return CommonResult.success(ossCallbackResult);
+        return R.success(ossCallbackResult);
     }
 
 }

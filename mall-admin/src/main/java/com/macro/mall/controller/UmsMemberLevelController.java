@@ -1,6 +1,6 @@
 package com.macro.mall.controller;
 
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.model.UmsMemberLevel;
 import com.macro.mall.service.UmsMemberLevelService;
 import io.swagger.annotations.Api;
@@ -30,8 +30,8 @@ public class UmsMemberLevelController {
     @ApiOperation("查询所有会员等级")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<UmsMemberLevel>> list(@RequestParam("defaultStatus") Integer defaultStatus) {
+    public R<List<UmsMemberLevel>> list(@RequestParam("defaultStatus") Integer defaultStatus) {
         List<UmsMemberLevel> memberLevelList = memberLevelService.list(defaultStatus);
-        return CommonResult.success(memberLevelList);
+        return R.success(memberLevelList);
     }
 }

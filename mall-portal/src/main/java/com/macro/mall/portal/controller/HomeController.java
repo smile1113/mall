@@ -1,6 +1,6 @@
 package com.macro.mall.portal.controller;
 
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.model.CmsSubject;
 import com.macro.mall.model.PmsProduct;
 import com.macro.mall.model.PmsProductCategory;
@@ -30,53 +30,53 @@ public class HomeController {
     @ApiOperation("首页内容信息展示")
     @RequestMapping(value = "/content", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<HomeContentResult> content() {
+    public R<HomeContentResult> content() {
         HomeContentResult contentResult = homeService.content();
-        return CommonResult.success(contentResult);
+        return R.success(contentResult);
     }
 
     @ApiOperation("分页获取推荐商品")
     @RequestMapping(value = "/recommendProductList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsProduct>> recommendProductList(@RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
+    public R<List<PmsProduct>> recommendProductList(@RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
                                                                @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<PmsProduct> productList = homeService.recommendProductList(pageSize, pageNum);
-        return CommonResult.success(productList);
+        return R.success(productList);
     }
 
     @ApiOperation("获取首页商品分类")
     @RequestMapping(value = "/productCateList/{parentId}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsProductCategory>> getProductCateList(@PathVariable Long parentId) {
+    public R<List<PmsProductCategory>> getProductCateList(@PathVariable Long parentId) {
         List<PmsProductCategory> productCategoryList = homeService.getProductCateList(parentId);
-        return CommonResult.success(productCategoryList);
+        return R.success(productCategoryList);
     }
 
     @ApiOperation("根据分类获取专题")
     @RequestMapping(value = "/subjectList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<CmsSubject>> getSubjectList(@RequestParam(required = false) Long cateId,
+    public R<List<CmsSubject>> getSubjectList(@RequestParam(required = false) Long cateId,
                                                          @RequestParam(value = "pageSize", defaultValue = "4") Integer pageSize,
                                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<CmsSubject> subjectList = homeService.getSubjectList(cateId,pageSize,pageNum);
-        return CommonResult.success(subjectList);
+        return R.success(subjectList);
     }
 
     @ApiOperation("分页获取人气推荐商品")
     @RequestMapping(value = "/hotProductList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsProduct>> hotProductList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+    public R<List<PmsProduct>> hotProductList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                          @RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize) {
         List<PmsProduct> productList = homeService.hotProductList(pageNum,pageSize);
-        return CommonResult.success(productList);
+        return R.success(productList);
     }
 
     @ApiOperation("分页获取新品推荐商品")
     @RequestMapping(value = "/newProductList", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsProduct>> newProductList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+    public R<List<PmsProduct>> newProductList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                          @RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize) {
         List<PmsProduct> productList = homeService.newProductList(pageNum,pageSize);
-        return CommonResult.success(productList);
+        return R.success(productList);
     }
 }

@@ -1,6 +1,6 @@
 package com.macro.mall.controller;
 
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.model.PmsSkuStock;
 import com.macro.mall.service.PmsSkuStockService;
 import io.swagger.annotations.Api;
@@ -27,19 +27,19 @@ public class PmsSkuStockController {
     @ApiOperation("根据商品ID及sku编码模糊搜索sku库存")
     @RequestMapping(value = "/{pid}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsSkuStock>> getList(@PathVariable Long pid, @RequestParam(value = "keyword",required = false) String keyword) {
+    public R<List<PmsSkuStock>> getList(@PathVariable Long pid, @RequestParam(value = "keyword",required = false) String keyword) {
         List<PmsSkuStock> skuStockList = skuStockService.getList(pid, keyword);
-        return CommonResult.success(skuStockList);
+        return R.success(skuStockList);
     }
     @ApiOperation("批量更新sku库存信息")
     @RequestMapping(value ="/update/{pid}",method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@PathVariable Long pid,@RequestBody List<PmsSkuStock> skuStockList){
+    public R update(@PathVariable Long pid,@RequestBody List<PmsSkuStock> skuStockList){
         int count = skuStockService.update(pid,skuStockList);
         if(count>0){
-            return CommonResult.success(count);
+            return R.success(count);
         }else{
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 }

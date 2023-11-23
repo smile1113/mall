@@ -1,6 +1,6 @@
 package com.macro.mall.portal.controller;
 
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.portal.config.AlipayConfig;
 import com.macro.mall.portal.domain.AliPayParam;
 import com.macro.mall.portal.service.AlipayService;
@@ -68,7 +68,7 @@ public class AlipayController {
     @ApiOperation(value = "支付宝统一收单线下交易查询",notes = "订单支付成功返回交易状态：TRADE_SUCCESS")
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<String> query(String outTradeNo, String tradeNo){
-        return CommonResult.success(alipayService.query(outTradeNo,tradeNo));
+    public R<String> query(String outTradeNo, String tradeNo){
+        return R.success(alipayService.query(outTradeNo,tradeNo));
     }
 }

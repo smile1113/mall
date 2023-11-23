@@ -1,7 +1,7 @@
 package com.macro.mall.portal.controller;
 
 import com.macro.mall.common.api.CommonPage;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.portal.domain.MemberReadHistory;
 import com.macro.mall.portal.service.MemberReadHistoryService;
 import io.swagger.annotations.Api;
@@ -29,41 +29,41 @@ public class MemberReadHistoryController {
     @ApiOperation("创建浏览记录")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult create(@RequestBody MemberReadHistory memberReadHistory) {
+    public R create(@RequestBody MemberReadHistory memberReadHistory) {
         int count = memberReadHistoryService.create(memberReadHistory);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("删除浏览记录")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@RequestParam("ids") List<String> ids) {
+    public R delete(@RequestParam("ids") List<String> ids) {
         int count = memberReadHistoryService.delete(ids);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("清空浏览记录")
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult clear() {
+    public R clear() {
         memberReadHistoryService.clear();
-        return CommonResult.success(null);
+        return R.success(null);
     }
 
     @ApiOperation("分页获取浏览记录")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<MemberReadHistory>> list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+    public R<CommonPage<MemberReadHistory>> list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                             @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
         Page<MemberReadHistory> page = memberReadHistoryService.list(pageNum, pageSize);
-        return CommonResult.success(CommonPage.restPage(page));
+        return R.success(CommonPage.restPage(page));
     }
 }

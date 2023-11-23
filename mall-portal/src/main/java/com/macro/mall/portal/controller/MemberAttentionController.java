@@ -1,7 +1,7 @@
 package com.macro.mall.portal.controller;
 
 import com.macro.mall.common.api.CommonPage;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.portal.domain.MemberBrandAttention;
 import com.macro.mall.portal.service.MemberAttentionService;
 import io.swagger.annotations.Api;
@@ -26,49 +26,49 @@ public class MemberAttentionController {
     @ApiOperation("添加品牌关注")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult add(@RequestBody MemberBrandAttention memberBrandAttention) {
+    public R add(@RequestBody MemberBrandAttention memberBrandAttention) {
         int count = memberAttentionService.add(memberBrandAttention);
         if(count>0){
-            return CommonResult.success(count);
+            return R.success(count);
         }else{
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("取消品牌关注")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(Long brandId) {
+    public R delete(Long brandId) {
         int count = memberAttentionService.delete(brandId);
         if(count>0){
-            return CommonResult.success(count);
+            return R.success(count);
         }else{
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("显示当前用户品牌关注列表")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<MemberBrandAttention>> list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+    public R<CommonPage<MemberBrandAttention>> list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                                @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
         Page<MemberBrandAttention> page = memberAttentionService.list(pageNum,pageSize);
-        return CommonResult.success(CommonPage.restPage(page));
+        return R.success(CommonPage.restPage(page));
     }
 
     @ApiOperation("显示品牌关注详情")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<MemberBrandAttention> detail(@RequestParam Long brandId) {
+    public R<MemberBrandAttention> detail(@RequestParam Long brandId) {
         MemberBrandAttention memberBrandAttention = memberAttentionService.detail(brandId);
-        return CommonResult.success(memberBrandAttention);
+        return R.success(memberBrandAttention);
     }
 
     @ApiOperation("清空当前用户品牌关注列表")
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult clear() {
+    public R clear() {
         memberAttentionService.clear();
-        return CommonResult.success(null);
+        return R.success(null);
     }
 }

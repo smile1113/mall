@@ -5,6 +5,7 @@ import com.macro.mall.dto.OmsOrderDetail;
 import com.macro.mall.dto.OmsOrderQueryParam;
 import com.macro.mall.model.OmsOrder;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * 订单查询自定义Dao
  * Created by macro on 2018/10/12.
  */
+@Repository
 public interface OmsOrderDao {
     /**
      * 条件查询订单

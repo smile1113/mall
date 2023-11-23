@@ -2,7 +2,7 @@ package com.macro.mall.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.json.JSONUtil;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.dto.BucketPolicyConfigDto;
 import com.macro.mall.dto.MinioUploadDto;
 import io.minio.*;
@@ -42,7 +42,7 @@ public class MinioController {
     @ApiOperation("文件上传")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult upload(@RequestPart("file") MultipartFile file) {
+    public R upload(@RequestPart("file") MultipartFile file) {
         try {
             //创建一个MinIO的Java客户端
             MinioClient minioClient =MinioClient.builder()
@@ -77,12 +77,12 @@ public class MinioController {
             MinioUploadDto minioUploadDto = new MinioUploadDto();
             minioUploadDto.setName(filename);
             minioUploadDto.setUrl(ENDPOINT + "/" + BUCKET_NAME + "/" + objectName);
-            return CommonResult.success(minioUploadDto);
+            return R.success(minioUploadDto);
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.info("上传发生错误: {}！", e.getMessage());
         }
-        return CommonResult.failed();
+        return R.failed();
     }
 
     /**
@@ -103,17 +103,17 @@ public class MinioController {
     @ApiOperation("文件删除")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@RequestParam("objectName") String objectName) {
+    public R delete(@RequestParam("objectName") String objectName) {
         try {
             MinioClient minioClient = MinioClient.builder()
                     .endpoint(ENDPOINT)
                     .credentials(ACCESS_KEY,SECRET_KEY)
                     .build();
             minioClient.removeObject(RemoveObjectArgs.builder().bucket(BUCKET_NAME).object(objectName).build());
-            return CommonResult.success(null);
+            return R.success(null);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return CommonResult.failed();
+        return R.failed();
     }
 }

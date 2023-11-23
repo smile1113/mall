@@ -1,7 +1,7 @@
 package com.macro.mall.controller;
 
 import com.macro.mall.common.api.CommonPage;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.dto.PmsProductCategoryParam;
 import com.macro.mall.dto.PmsProductCategoryWithChildrenItem;
 import com.macro.mall.model.PmsProductCategory;
@@ -31,88 +31,88 @@ public class PmsProductCategoryController {
     @ApiOperation("添加商品分类")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult create(@Validated @RequestBody PmsProductCategoryParam productCategoryParam) {
+    public R create(@Validated @RequestBody PmsProductCategoryParam productCategoryParam) {
         int count = productCategoryService.create(productCategoryParam);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("修改商品分类")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@PathVariable Long id,
+    public R update(@PathVariable Long id,
                          @Validated
                          @RequestBody PmsProductCategoryParam productCategoryParam) {
         int count = productCategoryService.update(id, productCategoryParam);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("分页查询商品分类")
     @RequestMapping(value = "/list/{parentId}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<PmsProductCategory>> getList(@PathVariable Long parentId,
+    public R<CommonPage<PmsProductCategory>> getList(@PathVariable Long parentId,
                                                                 @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                                 @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<PmsProductCategory> productCategoryList = productCategoryService.getList(parentId, pageSize, pageNum);
-        return CommonResult.success(CommonPage.restPage(productCategoryList));
+        return R.success(CommonPage.restPage(productCategoryList));
     }
 
     @ApiOperation("根据id获取商品分类")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<PmsProductCategory> getItem(@PathVariable Long id) {
+    public R<PmsProductCategory> getItem(@PathVariable Long id) {
         PmsProductCategory productCategory = productCategoryService.getItem(id);
-        return CommonResult.success(productCategory);
+        return R.success(productCategory);
     }
 
     @ApiOperation("删除商品分类")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@PathVariable Long id) {
+    public R delete(@PathVariable Long id) {
         int count = productCategoryService.delete(id);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("修改导航栏显示状态")
     @RequestMapping(value = "/update/navStatus", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateNavStatus(@RequestParam("ids") List<Long> ids, @RequestParam("navStatus") Integer navStatus) {
+    public R updateNavStatus(@RequestParam("ids") List<Long> ids, @RequestParam("navStatus") Integer navStatus) {
         int count = productCategoryService.updateNavStatus(ids, navStatus);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("修改显示状态")
     @RequestMapping(value = "/update/showStatus", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateShowStatus(@RequestParam("ids") List<Long> ids, @RequestParam("showStatus") Integer showStatus) {
+    public R updateShowStatus(@RequestParam("ids") List<Long> ids, @RequestParam("showStatus") Integer showStatus) {
         int count = productCategoryService.updateShowStatus(ids, showStatus);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("查询所有一级分类及子分类")
     @RequestMapping(value = "/list/withChildren", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<PmsProductCategoryWithChildrenItem>> listWithChildren() {
+    public R<List<PmsProductCategoryWithChildrenItem>> listWithChildren() {
         List<PmsProductCategoryWithChildrenItem> list = productCategoryService.listWithChildren();
-        return CommonResult.success(list);
+        return R.success(list);
     }
 }

@@ -1,6 +1,6 @@
 package com.macro.mall.demo.controller;
 
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.model.PmsBrand;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +39,7 @@ public class RestTemplateDemoController {
     @ResponseBody
     public Object getForEntity(@PathVariable Long id) {
         String url = HOST_MALL_ADMIN + "/brand/{id}";
-        ResponseEntity<CommonResult> responseEntity = restTemplate.getForEntity(url, CommonResult.class, id);
+        ResponseEntity<R> responseEntity = restTemplate.getForEntity(url, R.class, id);
         return responseEntity.getBody();
     }
 
@@ -50,7 +50,7 @@ public class RestTemplateDemoController {
         String url = HOST_MALL_ADMIN + "/brand/{id}";
         Map<String, String> params = new HashMap<>();
         params.put("id", String.valueOf(id));
-        ResponseEntity<CommonResult> responseEntity = restTemplate.getForEntity(url, CommonResult.class, params);
+        ResponseEntity<R> responseEntity = restTemplate.getForEntity(url, R.class, params);
         return responseEntity.getBody();
     }
 
@@ -60,7 +60,7 @@ public class RestTemplateDemoController {
     public Object getForEntity3(@PathVariable Long id) {
         String url = HOST_MALL_ADMIN + "/brand/{id}";
         UriComponents uriComponents = UriComponentsBuilder.fromUriString(url).build().expand(id).encode();
-        ResponseEntity<CommonResult> responseEntity = restTemplate.getForEntity(uriComponents.toUri(), CommonResult.class);
+        ResponseEntity<R> responseEntity = restTemplate.getForEntity(uriComponents.toUri(), R.class);
         return responseEntity.getBody();
     }
 
@@ -69,8 +69,8 @@ public class RestTemplateDemoController {
     @ResponseBody
     public Object getForObject(@PathVariable Long id) {
         String url = HOST_MALL_ADMIN + "/brand/{id}";
-        CommonResult commonResult = restTemplate.getForObject(url, CommonResult.class, id);
-        return commonResult;
+        R R = restTemplate.getForObject(url, R.class, id);
+        return R;
     }
 
     @ApiOperation("postForEntity jsonBody")
@@ -78,7 +78,7 @@ public class RestTemplateDemoController {
     @ResponseBody
     public Object postForEntity(@RequestBody PmsBrand brand) {
         String url = HOST_MALL_ADMIN + "/brand/create";
-        ResponseEntity<CommonResult> responseEntity = restTemplate.postForEntity(url, brand, CommonResult.class);
+        ResponseEntity<R> responseEntity = restTemplate.postForEntity(url, brand, R.class);
         return responseEntity.getBody();
     }
 
@@ -87,8 +87,8 @@ public class RestTemplateDemoController {
     @ResponseBody
     public Object postForObject(@RequestBody PmsBrand brand) {
         String url = HOST_MALL_ADMIN + "/brand/create";
-        CommonResult commonResult = restTemplate.postForObject(url, brand, CommonResult.class);
-        return commonResult;
+        R R = restTemplate.postForObject(url, brand, R.class);
+        return R;
     }
 
     @ApiOperation("postForEntity form")
@@ -103,7 +103,7 @@ public class RestTemplateDemoController {
         MultiValueMap<String, String> params= new LinkedMultiValueMap<>();
         params.add("name", name);
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
-        ResponseEntity<CommonResult> responseEntity = restTemplate.postForEntity(url, requestEntity, CommonResult.class);
+        ResponseEntity<R> responseEntity = restTemplate.postForEntity(url, requestEntity, R.class);
         return responseEntity.getBody();
     }
 }

@@ -1,7 +1,7 @@
 package com.macro.mall.controller;
 
 import com.macro.mall.common.api.CommonPage;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.model.SmsFlashPromotion;
 import com.macro.mall.service.SmsFlashPromotionService;
 import io.swagger.annotations.Api;
@@ -28,62 +28,62 @@ public class SmsFlashPromotionController {
     @ApiOperation("添加活动")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult create(@RequestBody SmsFlashPromotion flashPromotion) {
+    public R create(@RequestBody SmsFlashPromotion flashPromotion) {
         int count = flashPromotionService.create(flashPromotion);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         }
-        return CommonResult.failed();
+        return R.failed();
     }
 
     @ApiOperation("编辑活动")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@PathVariable Long id, @RequestBody SmsFlashPromotion flashPromotion) {
+    public R update(@PathVariable Long id, @RequestBody SmsFlashPromotion flashPromotion) {
         int count = flashPromotionService.update(id, flashPromotion);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         }
-        return CommonResult.failed();
+        return R.failed();
     }
 
     @ApiOperation("删除活动")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@PathVariable Long id) {
+    public R delete(@PathVariable Long id) {
         int count = flashPromotionService.delete(id);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         }
-        return CommonResult.failed();
+        return R.failed();
     }
 
     @ApiOperation("修改上下线状态")
     @RequestMapping(value = "/update/status/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@PathVariable Long id, Integer status) {
+    public R update(@PathVariable Long id, Integer status) {
         int count = flashPromotionService.updateStatus(id, status);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         }
-        return CommonResult.failed();
+        return R.failed();
     }
 
     @ApiOperation("获取活动详情")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<SmsFlashPromotion> getItem(@PathVariable Long id) {
+    public R<SmsFlashPromotion> getItem(@PathVariable Long id) {
         SmsFlashPromotion flashPromotion = flashPromotionService.getItem(id);
-        return CommonResult.success(flashPromotion);
+        return R.success(flashPromotion);
     }
 
     @ApiOperation("根据活动名称分页查询")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<SmsFlashPromotion>> getItem(@RequestParam(value = "keyword", required = false) String keyword,
+    public R<CommonPage<SmsFlashPromotion>> getItem(@RequestParam(value = "keyword", required = false) String keyword,
                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                           @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<SmsFlashPromotion> flashPromotionList = flashPromotionService.list(keyword, pageSize, pageNum);
-        return CommonResult.success(CommonPage.restPage(flashPromotionList));
+        return R.success(CommonPage.restPage(flashPromotionList));
     }
 }

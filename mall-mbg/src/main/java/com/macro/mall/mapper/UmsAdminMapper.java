@@ -3,8 +3,12 @@ package com.macro.mall.mapper;
 import com.macro.mall.model.UmsAdmin;
 import com.macro.mall.model.UmsAdminExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface UmsAdminMapper {
     long countByExample(UmsAdminExample example);
 

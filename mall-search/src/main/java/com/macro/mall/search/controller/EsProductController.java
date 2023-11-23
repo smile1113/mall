@@ -1,7 +1,7 @@
 package com.macro.mall.search.controller;
 
 import com.macro.mall.common.api.CommonPage;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.search.domain.EsProduct;
 import com.macro.mall.search.domain.EsProductRelatedInfo;
 import com.macro.mall.search.service.EsProductService;
@@ -31,47 +31,47 @@ public class EsProductController {
     @ApiOperation(value = "导入所有数据库中商品到ES")
     @RequestMapping(value = "/importAll", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult<Integer> importAllList() {
+    public R<Integer> importAllList() {
         int count = esProductService.importAll();
-        return CommonResult.success(count);
+        return R.success(count);
     }
 
     @ApiOperation(value = "根据id删除商品")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<Object> delete(@PathVariable Long id) {
+    public R<Object> delete(@PathVariable Long id) {
         esProductService.delete(id);
-        return CommonResult.success(null);
+        return R.success(null);
     }
 
     @ApiOperation(value = "根据id批量删除商品")
     @RequestMapping(value = "/delete/batch", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult<Object> delete(@RequestParam("ids") List<Long> ids) {
+    public R<Object> delete(@RequestParam("ids") List<Long> ids) {
         esProductService.delete(ids);
-        return CommonResult.success(null);
+        return R.success(null);
     }
 
     @ApiOperation(value = "根据id创建商品")
     @RequestMapping(value = "/create/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult<EsProduct> create(@PathVariable Long id) {
+    public R<EsProduct> create(@PathVariable Long id) {
         EsProduct esProduct = esProductService.create(id);
         if (esProduct != null) {
-            return CommonResult.success(esProduct);
+            return R.success(esProduct);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation(value = "简单搜索")
     @RequestMapping(value = "/search/simple", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<EsProduct>> search(@RequestParam(required = false) String keyword,
+    public R<CommonPage<EsProduct>> search(@RequestParam(required = false) String keyword,
                                                       @RequestParam(required = false, defaultValue = "0") Integer pageNum,
                                                       @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
         Page<EsProduct> esProductPage = esProductService.search(keyword, pageNum, pageSize);
-        return CommonResult.success(CommonPage.restPage(esProductPage));
+        return R.success(CommonPage.restPage(esProductPage));
     }
 
     @ApiOperation(value = "综合搜索、筛选、排序")
@@ -79,31 +79,31 @@ public class EsProductController {
             defaultValue = "0", allowableValues = "0,1,2,3,4", paramType = "query", dataType = "integer")
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<EsProduct>> search(@RequestParam(required = false) String keyword,
+    public R<CommonPage<EsProduct>> search(@RequestParam(required = false) String keyword,
                                                       @RequestParam(required = false) Long brandId,
                                                       @RequestParam(required = false) Long productCategoryId,
                                                       @RequestParam(required = false, defaultValue = "0") Integer pageNum,
                                                       @RequestParam(required = false, defaultValue = "5") Integer pageSize,
                                                       @RequestParam(required = false, defaultValue = "0") Integer sort) {
         Page<EsProduct> esProductPage = esProductService.search(keyword, brandId, productCategoryId, pageNum, pageSize, sort);
-        return CommonResult.success(CommonPage.restPage(esProductPage));
+        return R.success(CommonPage.restPage(esProductPage));
     }
 
     @ApiOperation(value = "根据商品id推荐商品")
     @RequestMapping(value = "/recommend/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<EsProduct>> recommend(@PathVariable Long id,
+    public R<CommonPage<EsProduct>> recommend(@PathVariable Long id,
                                                          @RequestParam(required = false, defaultValue = "0") Integer pageNum,
                                                          @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
         Page<EsProduct> esProductPage = esProductService.recommend(id, pageNum, pageSize);
-        return CommonResult.success(CommonPage.restPage(esProductPage));
+        return R.success(CommonPage.restPage(esProductPage));
     }
 
     @ApiOperation(value = "获取搜索的相关品牌、分类及筛选属性")
     @RequestMapping(value = "/search/relate", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<EsProductRelatedInfo> searchRelatedInfo(@RequestParam(required = false) String keyword) {
+    public R<EsProductRelatedInfo> searchRelatedInfo(@RequestParam(required = false) String keyword) {
         EsProductRelatedInfo productRelatedInfo = esProductService.searchRelatedInfo(keyword);
-        return CommonResult.success(productRelatedInfo);
+        return R.success(productRelatedInfo);
     }
 }

@@ -1,7 +1,7 @@
 package com.macro.mall.controller;
 
 import com.macro.mall.common.api.CommonPage;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.dto.OmsOrderReturnApplyResult;
 import com.macro.mall.dto.OmsReturnApplyQueryParam;
 import com.macro.mall.dto.OmsUpdateStatusParam;
@@ -31,41 +31,41 @@ public class OmsOrderReturnApplyController {
     @ApiOperation("分页查询退货申请")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<OmsOrderReturnApply>> list(OmsReturnApplyQueryParam queryParam,
+    public R<CommonPage<OmsOrderReturnApply>> list(OmsReturnApplyQueryParam queryParam,
                                                               @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                               @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<OmsOrderReturnApply> returnApplyList = returnApplyService.list(queryParam, pageSize, pageNum);
-        return CommonResult.success(CommonPage.restPage(returnApplyList));
+        return R.success(CommonPage.restPage(returnApplyList));
     }
 
     @ApiOperation("批量删除退货申请")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@RequestParam("ids") List<Long> ids) {
+    public R delete(@RequestParam("ids") List<Long> ids) {
         int count = returnApplyService.delete(ids);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         }
-        return CommonResult.failed();
+        return R.failed();
     }
 
     @ApiOperation("获取退货申请详情")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult getItem(@PathVariable Long id) {
+    public R getItem(@PathVariable Long id) {
         OmsOrderReturnApplyResult result = returnApplyService.getItem(id);
-        return CommonResult.success(result);
+        return R.success(result);
     }
 
     @ApiOperation("修改退货申请状态")
     @RequestMapping(value = "/update/status/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateStatus(@PathVariable Long id, @RequestBody OmsUpdateStatusParam statusParam) {
+    public R updateStatus(@PathVariable Long id, @RequestBody OmsUpdateStatusParam statusParam) {
         int count = returnApplyService.updateStatus(id, statusParam);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         }
-        return CommonResult.failed();
+        return R.failed();
     }
 
 }

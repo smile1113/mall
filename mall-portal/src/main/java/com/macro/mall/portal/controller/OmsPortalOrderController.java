@@ -1,7 +1,7 @@
 package com.macro.mall.portal.controller;
 
 import com.macro.mall.common.api.CommonPage;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.portal.domain.ConfirmOrderResult;
 import com.macro.mall.portal.domain.OmsOrderDetail;
 import com.macro.mall.portal.domain.OrderParam;
@@ -32,41 +32,41 @@ public class OmsPortalOrderController {
     @ApiOperation("根据购物车信息生成确认单")
     @RequestMapping(value = "/generateConfirmOrder", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult<ConfirmOrderResult> generateConfirmOrder(@RequestBody List<Long> cartIds) {
+    public R<ConfirmOrderResult> generateConfirmOrder(@RequestBody List<Long> cartIds) {
         ConfirmOrderResult confirmOrderResult = portalOrderService.generateConfirmOrder(cartIds);
-        return CommonResult.success(confirmOrderResult);
+        return R.success(confirmOrderResult);
     }
 
     @ApiOperation("根据购物车信息生成订单")
     @RequestMapping(value = "/generateOrder", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult generateOrder(@RequestBody OrderParam orderParam) {
+    public R generateOrder(@RequestBody OrderParam orderParam) {
         Map<String, Object> result = portalOrderService.generateOrder(orderParam);
-        return CommonResult.success(result, "下单成功");
+        return R.success(result, "下单成功");
     }
 
     @ApiOperation("用户支付成功的回调")
     @RequestMapping(value = "/paySuccess", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult paySuccess(@RequestParam Long orderId,@RequestParam Integer payType) {
+    public R paySuccess(@RequestParam Long orderId,@RequestParam Integer payType) {
         Integer count = portalOrderService.paySuccess(orderId,payType);
-        return CommonResult.success(count, "支付成功");
+        return R.success(count, "支付成功");
     }
 
     @ApiOperation("自动取消超时订单")
     @RequestMapping(value = "/cancelTimeOutOrder", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult cancelTimeOutOrder() {
+    public R cancelTimeOutOrder() {
         portalOrderService.cancelTimeOutOrder();
-        return CommonResult.success(null);
+        return R.success(null);
     }
 
     @ApiOperation("取消单个超时订单")
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult cancelOrder(Long orderId) {
+    public R cancelOrder(Long orderId) {
         portalOrderService.sendDelayMessageCancelOrder(orderId);
-        return CommonResult.success(null);
+        return R.success(null);
     }
 
     @ApiOperation("按状态分页获取用户订单列表")
@@ -74,42 +74,42 @@ public class OmsPortalOrderController {
             defaultValue = "-1", allowableValues = "-1,0,1,2,3,4", paramType = "query", dataType = "int")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<OmsOrderDetail>> list(@RequestParam Integer status,
+    public R<CommonPage<OmsOrderDetail>> list(@RequestParam Integer status,
                                                    @RequestParam(required = false, defaultValue = "1") Integer pageNum,
                                                    @RequestParam(required = false, defaultValue = "5") Integer pageSize) {
         CommonPage<OmsOrderDetail> orderPage = portalOrderService.list(status,pageNum,pageSize);
-        return CommonResult.success(orderPage);
+        return R.success(orderPage);
     }
 
     @ApiOperation("根据ID获取订单详情")
     @RequestMapping(value = "/detail/{orderId}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<OmsOrderDetail> detail(@PathVariable Long orderId) {
+    public R<OmsOrderDetail> detail(@PathVariable Long orderId) {
         OmsOrderDetail orderDetail = portalOrderService.detail(orderId);
-        return CommonResult.success(orderDetail);
+        return R.success(orderDetail);
     }
 
     @ApiOperation("用户取消订单")
     @RequestMapping(value = "/cancelUserOrder", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult cancelUserOrder(Long orderId) {
+    public R cancelUserOrder(Long orderId) {
         portalOrderService.cancelOrder(orderId);
-        return CommonResult.success(null);
+        return R.success(null);
     }
 
     @ApiOperation("用户确认收货")
     @RequestMapping(value = "/confirmReceiveOrder", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult confirmReceiveOrder(Long orderId) {
+    public R confirmReceiveOrder(Long orderId) {
         portalOrderService.confirmReceiveOrder(orderId);
-        return CommonResult.success(null);
+        return R.success(null);
     }
 
     @ApiOperation("用户删除订单")
     @RequestMapping(value = "/deleteOrder", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult deleteOrder(Long orderId) {
+    public R deleteOrder(Long orderId) {
         portalOrderService.deleteOrder(orderId);
-        return CommonResult.success(null);
+        return R.success(null);
     }
 }

@@ -1,7 +1,7 @@
 package com.macro.mall.controller;
 
 import com.macro.mall.common.api.CommonPage;
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.model.SmsCouponHistory;
 import com.macro.mall.service.SmsCouponHistoryService;
 import io.swagger.annotations.Api;
@@ -31,12 +31,12 @@ public class SmsCouponHistoryController {
     @ApiOperation("根据优惠券id，使用状态，订单编号分页获取领取记录")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<SmsCouponHistory>> list(@RequestParam(value = "couponId", required = false) Long couponId,
+    public R<CommonPage<SmsCouponHistory>> list(@RequestParam(value = "couponId", required = false) Long couponId,
                                                            @RequestParam(value = "useStatus", required = false) Integer useStatus,
                                                            @RequestParam(value = "orderSn", required = false) String orderSn,
                                                            @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<SmsCouponHistory> historyList = historyService.list(couponId, useStatus, orderSn, pageSize, pageNum);
-        return CommonResult.success(CommonPage.restPage(historyList));
+        return R.success(CommonPage.restPage(historyList));
     }
 }

@@ -1,6 +1,6 @@
 package com.macro.mall.controller;
 
-import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.common.api.R;
 import com.macro.mall.model.UmsResourceCategory;
 import com.macro.mall.service.UmsResourceCategoryService;
 import io.swagger.annotations.Api;
@@ -27,45 +27,45 @@ public class UmsResourceCategoryController {
     @ApiOperation("查询所有后台资源分类")
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<List<UmsResourceCategory>> listAll() {
+    public R<List<UmsResourceCategory>> listAll() {
         List<UmsResourceCategory> resourceList = resourceCategoryService.listAll();
-        return CommonResult.success(resourceList);
+        return R.success(resourceList);
     }
 
     @ApiOperation("添加后台资源分类")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult create(@RequestBody UmsResourceCategory umsResourceCategory) {
+    public R create(@RequestBody UmsResourceCategory umsResourceCategory) {
         int count = resourceCategoryService.create(umsResourceCategory);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("修改后台资源分类")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@PathVariable Long id,
+    public R update(@PathVariable Long id,
                                @RequestBody UmsResourceCategory umsResourceCategory) {
         int count = resourceCategoryService.update(id, umsResourceCategory);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 
     @ApiOperation("根据ID删除后台资源分类")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@PathVariable Long id) {
+    public R delete(@PathVariable Long id) {
         int count = resourceCategoryService.delete(id);
         if (count > 0) {
-            return CommonResult.success(count);
+            return R.success(count);
         } else {
-            return CommonResult.failed();
+            return R.failed();
         }
     }
 }
